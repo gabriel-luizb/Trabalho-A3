@@ -1,0 +1,300 @@
+import java.util.Scanner;
+
+public class Main {
+    public int exibirMenuEObterOpcao(Scanner scanner) {
+        System.out.println("Menu:");
+        System.out.println("1. Criar Doação");
+        System.out.println("2. Ler Doações");
+        System.out.println("3. Atualizar Doação");
+        System.out.println("4. Deletar Doação");
+        System.out.println("5. Sair");
+        System.out.print("Escolha uma opção: ");
+        return scanner.nextInt();
+    }
+
+    public static void main(String[] args) {
+        SistemaGerenciamentoDoacoes.main(args);
+    }
+}
+
+---------------------------------------------------------------
+
+public class GerenciamentoDoacoes {
+    private String data;
+    private String dinheiro;
+    private String alimentos;
+    private String roupa;
+
+    public GerenciamentoDoacoes(String data, String dinheiro, String alimentos, String roupa) {
+        this.data = data;
+        this.dinheiro = dinheiro;
+        this.alimentos = alimentos;
+        this.roupa = roupa;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getDinheiro() {
+        return dinheiro;
+    }
+
+    public void setDinheiro(String dinheiro) {
+        this.dinheiro = dinheiro;
+    }
+
+    public String getAlimentos() {
+        return alimentos;
+    }
+
+    public void setAlimentos(String alimentos) {
+        this.alimentos = alimentos;
+    }
+
+    public String getRoupa() {
+        return roupa;
+    }
+
+    public void setRoupa(String roupa) {
+        this.roupa = roupa;
+    }
+
+    @Override
+    public String toString() {
+        return "Data=" + data + "\nDinheiro=" + dinheiro + "\nAlimentos=" + alimentos + "\nRoupa=" + roupa;
+    }
+
+    public String toDisplayString() {
+        return "Data: " + data + "\nDinheiro: " + dinheiro + "\nAlimentos: " + alimentos + "\nRoupa: " + roupa;
+    }
+}
+-------------------------------------------------------------------
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class SistemaGerenciamentoDoacoes {
+
+    private static final String ARQUIVO_DADOS = "doacoes.txt";
+    private static List<GerenciamentoDoacoes> doacoes = new ArrayList<>();
+
+    public static void main(String[] args) {
+        carregarDadosDoArquivo();
+
+        Scanner scanner = new Scanner(System.in);
+        Main menu = new Main();
+
+        while (true) {
+            int opcao = menu.exibirMenuEObterOpcao(scanner);
+            scanner.nextLine(); // Limpar buffer
+
+            switch (opcao) {
+                case 1:
+                    criarDoacao(scanner);
+                    break;
+                case 2:
+                    lerDoacoes(scanner);
+                    break;
+                case 3:
+                    atualizarDoacao(scanner);
+                    break;
+                case 4:
+                    deletarDoacao(scanner);
+                    break;
+                case 5:
+                    System.out.println("Saindo do sistema...");
+                    salvarDadosNoArquivo();
+                    System.exit(0);
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        }
+    }
+
+    private static void carregarDadosDoArquivo() {
+        try (FileReader reader = new FileReader(ARQUIVO_DADOS)) {
+            Scanner arquivoScanner = new Scanner(reader);
+            while (arquivoScanner.hasNextLine()) {
+                String linha = arquivoScanner.nextLine();
+                String[] dados = linha.split(",");
+                if (dados.length == 4) { // Verifica se há exatamente 4 elementos no array
+                    String data = dados[0].split("=")[1];
+                    String dinheiro = dados[1].split("=")[1];
+                    String alimentos = dados[2].split("=")[1];
+                    String roupa = dados[3].split("=")[1];
+
+                    GerenciamentoDoacoes doacao = new GerenciamentoDoacoes(data, dinheiro, alimentos, roupa);
+                    doacoes.add(doacao);
+                } else {
+                    System.err.println("Dados incompletos na linha: " + linha);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao carregar dados do arquivo: " + e.getMessage());
+        }
+    }
+
+    private static void salvarDadosNoArquivo() {
+        try (FileWriter writer = new FileWriter(ARQUIVO_DADOS)) {
+            int totalDinheiro = 0;
+            int totalAlimentos = 0;
+            int totalRoupas = 0;
+
+            for (GerenciamentoDoacoes doacao : doacoes) {
+                writer.write("Doação na Data = " + doacao.getData() + "\n");
+                writer.write("Dinheiro = " + doacao.getDinheiro() + "\n");
+                writer.write("Alimentos = " + doacao.getAlimentos() + "\n");
+                writer.write("Roupa = " + doacao.getRoupa() + "\n");
+                writer.write("\n");
+
+                totalDinheiro += Integer.parseInt(doacao.getDinheiro());
+                totalAlimentos += Integer.parseInt(doacao.getAlimentos());
+                totalRoupas += Integer.parseInt(doacao.getRoupa());
+            }
+
+            writer.write("**Totais:**\n");
+            writer.write("Dinheiro: " + totalDinheiro + "\n");
+            writer.write("Alimentos: " + totalAlimentos + "\n");
+            writer.write("Roupas: " + totalRoupas + "\n");
+
+        } catch (IOException e) {
+            System.err.println("Erro ao salvar dados no arquivo: " + e.getMessage());
+        }
+    }
+
+
+    private static void criarDoacao(Scanner scanner) {
+        System.out.println("*Criando uma nova doação:*");
+
+        System.out.print("Data (dd/mm/yyyy): ");
+        String data = scanner.nextLine();
+
+        System.out.print("Dinheiro: ");
+        String dinheiro = scanner.nextLine();
+
+        System.out.print("Alimentos: ");
+        String alimentos = scanner.nextLine();
+
+        System.out.print("Roupa: ");
+        String roupa = scanner.nextLine();
+
+        GerenciamentoDoacoes doacao = new GerenciamentoDoacoes(data, dinheiro, alimentos, roupa);
+        doacoes.add(doacao);
+
+        System.out.println("Doação salva com sucesso!");
+
+        salvarDadosNoArquivo();
+    }
+
+    private static void lerDoacoes(Scanner scanner) {
+        if (doacoes.isEmpty()) {
+            System.out.println("Não há doações cadastradas.");
+            return;
+        }
+
+        System.out.println("*Lista de Doações:*");
+
+        for (GerenciamentoDoacoes doacao : doacoes) {
+            System.out.println(doacao.toDisplayString());
+        }
+
+        int totalDinheiro = 0;
+        int totalAlimentos = 0;
+        int totalRoupas = 0;
+
+        for (GerenciamentoDoacoes doacao : doacoes) {
+            totalDinheiro += Integer.parseInt(doacao.getDinheiro());
+            totalAlimentos += Integer.parseInt(doacao.getAlimentos());
+            totalRoupas += Integer.parseInt(doacao.getRoupa());
+        }
+
+        System.out.println("\n**Totais:**");
+        System.out.println("Dinheiro: " + totalDinheiro);
+        System.out.println("Alimentos: " + totalAlimentos);
+        System.out.println("Roupas: " + totalRoupas);
+    }
+
+    private static void atualizarDoacao(Scanner scanner) {
+        if (doacoes.isEmpty()) {
+            System.out.println("Não há doações cadastradas para atualizar.");
+            return;
+        }
+
+        mostrarDoacoesComNumeracao();
+
+        System.out.print("Digite o número da doação a ser atualizada: ");
+        int indiceDoacao = scanner.nextInt() - 1;
+        scanner.nextLine(); // Limpar buffer
+
+        if (indiceDoacao < 0 || indiceDoacao >= doacoes.size()) {
+            System.out.println("Índice inválido. Tente novamente.");
+            return;
+        }
+
+        GerenciamentoDoacoes doacao = doacoes.get(indiceDoacao);
+
+        System.out.print("Data (" + doacao.getData() + "): ");
+        String data = scanner.nextLine();
+        if (!data.isEmpty()) {
+            doacao.setData(data);
+        }
+
+        System.out.print("Dinheiro (" + doacao.getDinheiro() + "): ");
+        String dinheiro = scanner.nextLine();
+        if (!dinheiro.isEmpty()) {
+            doacao.setDinheiro(dinheiro);
+        }
+
+        System.out.print("Alimentos (" + doacao.getAlimentos() + "): ");
+        String alimentos = scanner.nextLine();
+        if (!alimentos.isEmpty()) {
+            doacao.setAlimentos(alimentos);
+        }
+
+        System.out.print("Roupa (" + doacao.getRoupa() + "): ");
+        String roupa = scanner.nextLine();
+        if (!roupa.isEmpty()) {
+            doacao.setRoupa(roupa);
+        }
+
+        System.out.println("Doação atualizada com sucesso!");
+
+        salvarDadosNoArquivo();
+    }
+
+    private static void deletarDoacao(Scanner scanner) {
+        if (doacoes.isEmpty()) {
+            System.out.println("Não há doações cadastradas para deletar.");
+            return;
+        }
+
+        mostrarDoacoesComNumeracao();
+
+        System.out.print("Digite o número da doação a ser deletada: ");
+        int indiceDoacao = scanner.nextInt() - 1;
+        scanner.nextLine(); // Limpar buffer
+
+        if (indiceDoacao < 0 || indiceDoacao >= doacoes.size()) {
+            System.out.println("Índice inválido. Tente novamente.");
+            return;
+        }
+
+        doacoes.remove(indiceDoacao);
+        System.out.println("Doação deletada com sucesso!");
+
+        salvarDadosNoArquivo();
+    }
+
+    private static void mostrarDoacoesComNumeracao() {
+        for (int i = 0; i < doacoes.size(); i++) {
+            System.out.println((i + 1) + ". " + doacoes.get(i).toDisplayString());
+        }
+    }
+}
