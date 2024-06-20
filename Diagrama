@@ -1,0 +1,36 @@
+,---------------------------------------.                                                                     
+|GerenciamentoDoacoes                   |                                                                     
+|---------------------------------------|  ,-----------------------------------------------------------------.
+|- data: String                         |  |Main                                                             |
+|- dinheiro: String                     |  |-----------------------------------------------------------------|
+|- alimentos: String                    |  |+ main(args: String[]): void                                     |
+|- roupa: String                        |  |- criarSistemaGerenciamentoDoacoes(): SistemaGerenciamentoDoacoes|
+|                                       |  |- scanner: Scanner                                               |
+|+ getData(): String                    |  |- opcao: int                                                     |
+|+ setData(data: String): void          |  |                                                                 |
+|+ getDinheiro(): String                |  |+ criarInstanciaDoSistema()                                      |
+|+ setDinheiro(dinheiro: String): void  |  |+ carregarDadosDoArquivo()                                       |
+|+ getAlimentos(): String               |  |+ exibirMenuPrincipal()                                          |
+|+ setAlimentos(alimentos: String): void|  |+ obterOpcaoDoUsuario()                                          |
+|+ getRoupa(): String                   |  |+ executarOperacao(opcao)                                        |
+|+ setRoupa(roupa: String): void        |  |+ salvarDadosNoArquivo()                                         |
+|+ toString(): String                   |  `-----------------------------------------------------------------'
+|+ toDisplayString(): String            |                              /                                   
+`---------------------------------------'                            /                                   
+                             \                                     /                                       
+                              \                                  /
+                        ,----------------------------------------------.                                      
+                        |SistemaGerenciamentoDoacoes                   |                                      
+                        |----------------------------------------------|                                      
+                        |- ARQUIVO_DADOS: String                       |                                      
+                        |- doacoes: List<GerenciamentoDoacoes>         |                                      
+                        |                                              |                                      
+                        |+ main(args: String[]): void                  |                                      
+                        |+ carregarDadosDoArquivo(): void              |                                      
+                        |+ salvarDadosNoArquivo(): void                |                                      
+                        |+ criarDoacao(scanner: Scanner): void         |                                      
+                        |+ lerDoacoes(scanner: Scanner): void          |                                      
+                        |+ atualizarDoacao(scanner: Scanner): void     |                                      
+                        |+ mostrarDoacoesComNumeracao(): void          |                                      
+                        |+ deletarDoacao(scanner: Scanner): void       |                                      
+                        |+ exibirMenuEObterOpcao(scanner: Scanner): int|               
