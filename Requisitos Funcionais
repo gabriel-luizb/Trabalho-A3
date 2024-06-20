@@ -1,0 +1,36 @@
+Requisitos Funcionais
+A seguir, a lista dos requisitos funcionais identificados para o sistema:
+
+1- Interface de Usuário:
+
+Menu inicial com opções para Criar, Ler, Atualizar, Deletar Doações e Sair.
+
+2- Receber Doações:
+
+Entrada para data da doação.
+Entrada para tipo de doação (dinheiro, alimentos, roupas).
+Entrada para quantidade de doação.
+
+3- Calcular Total de Doações:
+
+Função para somar todas as doações de dinheiro.
+Função para somar todas as doações de alimentos.
+Função para somar todas as doações de roupas.
+Apresentar os totais em uma interface.
+
+4- Armazenar Informações de Doações:
+
+Salvar dados das doações em um arquivo texto.
+Carregar dados das doações a partir de um arquivo texto.
+
+5- CRUD de Doações:
+
+Criar Doação: Inserir nova doação e salvar no arquivo.
+Ler Doações: Exibir todas as doações salvas e os totais calculados.
+Atualizar Doação: Modificar uma doação existente e salvar a atualização no arquivo.
+Deletar Doação: Remover uma doação existente e atualizar o arquivo.
+
+6- Tratamento de Exceção:
+
+Manusear erros ao carregar ou salvar dados no arquivo.
+Validar entradas do usuário (por exemplo, assegurar que a quantidade de doação seja um número válido).
