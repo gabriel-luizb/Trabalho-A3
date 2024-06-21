@@ -1,3 +1,19 @@
+Descrição do Diagrama de Classes - Sistema de Biblioteca
+O sistema de biblioteca é composto por três partes principais:
+
+Livro: Representa cada livro na biblioteca, incluindo informações como título, autor, ano de publicação e se está disponível para empréstimo.
+
+Usuario: Refere-se aos usuários da biblioteca, identificados por nome e matrícula. Eles podem emprestar e devolver livros, sendo que cada usuário pode ter vários livros emprestados de uma vez.
+
+Biblioteca: É a instituição em si, com um nome e endereço específicos. Ela gerencia uma coleção de livros disponíveis para empréstimo, permitindo adicionar novos livros e remover os que não estão mais disponíveis.
+
+Essas classes estão interligadas: os livros podem ser emprestados por usuários específicos de uma biblioteca, e cada usuário pode interagir com vários livros da coleção da biblioteca.
+
+
+
+
+
+
 ,---------------------------------------.                                                                     
 |GerenciamentoDoacoes                   |                                                                     
 |---------------------------------------|  ,-----------------------------------------------------------------.
