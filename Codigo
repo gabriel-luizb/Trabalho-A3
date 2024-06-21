@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class Main {
@@ -17,7 +18,11 @@ public class Main {
     }
 }
 
----------------------------------------------------------------
+
+
+//
+
+
 
 public class GerenciamentoDoacoes {
     private String data;
@@ -73,7 +78,13 @@ public class GerenciamentoDoacoes {
         return "Data: " + data + "\nDinheiro: " + dinheiro + "\nAlimentos: " + alimentos + "\nRoupa: " + roupa;
     }
 }
--------------------------------------------------------------------
+
+
+
+
+//
+
+
 
 import java.io.*;
 import java.util.ArrayList;
